@@ -1,0 +1,40 @@
+package com.alexit.justrecipes
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import com.alexit.justrecipes.ui.systembarprotection.NavigationBarProtection
+import com.alexit.justrecipes.ui.RecipesScreen
+import com.alexit.justrecipes.ui.inputingrediets.InputIngredientsViewModel
+import com.alexit.justrecipes.ui.theme.JustRecipesTheme
+import com.alexit.justrecipes.ui.systembarprotection.StatusBarProtection
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            window.isNavigationBarContrastEnforced = false
+            JustRecipesTheme {
+                Box(
+                    modifier = Modifier.fillMaxSize()
+                        .background(color = JustRecipesTheme.colors.background)
+                        //.pointerInput(Unit){}
+                ) {
+                    StatusBarProtection()
+                    NavigationBarProtection()
+                    RecipesScreen()
+                }
+            }
+        }
+    }
+}
+

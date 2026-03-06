@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Just Recipes</string>
+    <string name="button_input_ingredients">Input Ingredients</string>
+    <string name="button_search_recipe">Search Recipe</string>
+    <string name="button_request_ai">Request AI</string>
+    <string name="button_own_recipes">Own Recipes</string>
+    <string name="icon_search">Search</string>
+    <string name="icon_add">Add</string>
+    <string name="title_input_ingredients">"Список Ингредиентов"</string>
+    <string name="title_search_recipe">Поиск Рецепта</string>
+    <string name="title_request_ai">Запрос ИИ</string>
+    <string name="title_own_recipes">Свои Рецепты</string>
+    <string name="placeholder_input_ingredients">Добавить Игредиент</string>
+    <string name="placeholder_input_category">Выбрать Категорию Игредиента</string>
+    <string name="delete_inputted_ingredient">Удалить Игредиерт</string>
+    <string name="scale">Scale</string>
+    <string name="clear_text">Clear Text</string>
+    <string name="delete_ingredient">Удалить ингредиент</string>
+    <string name="confirmation">Да</string>
+    <string name="dismiss">Нет</string>
+    <string name="ingredient">Ингредиент</string>
+    <string name="already_exist">уже есть в списке</string>
+    <string name="add_unknown_ingredient">Добавить неизвестный ингредиент</string>
+    <string name="select_category_ingredient">Веберите категорию продукта:</string>
+</resources>
