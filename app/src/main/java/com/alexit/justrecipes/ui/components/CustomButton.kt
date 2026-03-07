@@ -25,7 +25,7 @@ fun CustomButton(
     iconDescription: Int,
     sizeWidth: Dp,
     sizeHeight: Dp,
-    sizeButton: Dp,
+    sizeIcon: Dp,
     colorOnBottomMenu: Color,
     onClick: () -> Unit
 ) {
@@ -41,7 +41,7 @@ fun CustomButton(
     ) {
         Image(
             modifier = Modifier
-                .size(sizeButton),
+                .size(sizeIcon),
             imageVector = ImageVector.vectorResource(id = iconResId),
             contentDescription = stringResource(id = iconDescription),
             colorFilter = ColorFilter.tint(colorOnBottomMenu)
@@ -55,7 +55,7 @@ fun CustomButtonSelected(
     iconDescription: Int,
     sizeWidth: Dp,
     sizeHeight: Dp,
-    sizeButton: Dp,
+    sizeIcon: Dp,
     colorBottomMenuSelected: Color,
     colorOnBottomMenuSelected: Color,
     colorTopBorderButtonSelected: Color,
@@ -79,7 +79,7 @@ fun CustomButtonSelected(
     ) {
         Image(
             modifier = Modifier
-                .size(sizeButton),
+                .size(sizeIcon),
             imageVector = ImageVector.vectorResource(id = iconResId),
             contentDescription = stringResource(id = iconDescription),
             colorFilter = ColorFilter.tint(colorOnBottomMenuSelected)

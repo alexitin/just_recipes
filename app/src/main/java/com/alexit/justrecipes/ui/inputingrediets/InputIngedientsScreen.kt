@@ -33,7 +33,7 @@ fun InputIngredientsScreen(
             color = JustRecipesTheme.colors.text1,
             padding = JustRecipesTheme.dimensions.paddingTextTitlePanel,
             text = stringResource(R.string.title_input_ingredients),
-            style = JustRecipesTheme.typography.titlePanel
+            style = JustRecipesTheme.typography.title1
         )
         Column(
             modifier = Modifier
@@ -51,7 +51,7 @@ fun InputIngredientsScreen(
                 onDoneClick = { ingredientName: String -> inputIngredientsViewModel.addInputtedIngredient(ingredientName) },
                 height = JustRecipesTheme.dimensions.heightFieldInput,
                 width = JustRecipesTheme.dimensions.widthInputtedIngredient,
-                textStyle = JustRecipesTheme.typography.inputSearchField,
+                textStyle = JustRecipesTheme.typography.input1,
                 placeholder = stringResource(R.string.placeholder_input_ingredients),
                 focusedField = JustRecipesTheme.colors.background2,
                 focusedBorderField = JustRecipesTheme.colors.border2,
@@ -62,7 +62,7 @@ fun InputIngredientsScreen(
                 contentPadding = JustRecipesTheme.dimensions.contentPaddingField,
                 radiusShape = JustRecipesTheme.dimensions.radiusCornerField,
                 borderThickness = JustRecipesTheme.dimensions.borderThickness,
-                sizeIcon = JustRecipesTheme.dimensions.sizeIcon,
+                sizeIcon = JustRecipesTheme.dimensions.sizeIcon1,
                 bottomMenuHeight = JustRecipesTheme.dimensions.heightBottomMenu,
                 colorIconSearch = JustRecipesTheme.colors.iconSearchIngredient,
             )
@@ -76,12 +76,12 @@ fun InputIngredientsScreen(
                     colorIconDeleteIngredient = JustRecipesTheme.colors.iconDeleteIngredient,
                     colorInputtedIngredientsField = JustRecipesTheme.colors.background4,
                     colorInputtedIngredientText = JustRecipesTheme.colors.text4,
-                    textStyleInputtedIngredient = JustRecipesTheme.typography.titlePanel,
+                    textStyleInputtedIngredient = JustRecipesTheme.typography.title1,
                     iconScale = R.drawable.outline_scale_24,
                     descriptionIconScale = R.string.scale,
                     colorBackgroundWeightIngredient = JustRecipesTheme.colors.background5,
                     colorWeightIngredient = JustRecipesTheme.colors.text5,
-                    textStyleWeightIngredient = JustRecipesTheme.typography.weightInputtedIngredient,
+                    textStyleWeightIngredient = JustRecipesTheme.typography.input2,
                     contentPadding = JustRecipesTheme.dimensions.contentPaddingField,
                     width = JustRecipesTheme.dimensions.widthInputtedIngredient,
                     bottomMenuHeight = JustRecipesTheme.dimensions.heightBottomMenu,
@@ -89,8 +89,8 @@ fun InputIngredientsScreen(
                     widthInputtedIngredientText = JustRecipesTheme.dimensions.widthInputtedIngredientText,
                     widthInputtedIngredientWeight = JustRecipesTheme.dimensions.widthInputtedIngredientWeight,
                     heightInputtedIngredientWeight = JustRecipesTheme.dimensions.heightInputtedIngredientWeight,
-                    sizeIcon = JustRecipesTheme.dimensions.sizeIcon,
-                    sizeIconScale = JustRecipesTheme.dimensions.sizeIconScale,
+                    sizeIcon = JustRecipesTheme.dimensions.sizeIcon1,
+                    sizeIconScale = JustRecipesTheme.dimensions.sizeIcon2,
                     radiusShape = JustRecipesTheme.dimensions.radiusCornerField
                 )
             }
@@ -107,7 +107,7 @@ fun InputIngredientsScreen(
                     borderThickness = JustRecipesTheme.dimensions.borderThickness,
                     textDialog = stringResource(R.string.delete_ingredient),
                     item = inputIngredientsViewModel.deletingIngredient.name,
-                    textStyle = JustRecipesTheme.typography.titlePanel,
+                    textStyle = JustRecipesTheme.typography.title1,
                     textConfirmation = stringResource(R.string.confirmation),
                     textDismiss = stringResource(R.string.dismiss)
                 )
@@ -122,7 +122,7 @@ fun InputIngredientsScreen(
                     colorText = JustRecipesTheme.colors.text6,
                     radiusShape = JustRecipesTheme.dimensions.radiusCornerField,
                     borderThickness = JustRecipesTheme.dimensions.borderThickness,
-                    textStyle = JustRecipesTheme.typography.titlePanel,
+                    textStyle = JustRecipesTheme.typography.title1,
                     textPopupPre = stringResource(R.string.ingredient),
                     textPopupAft = stringResource(R.string.already_exist),
                     item = inputIngredientsViewModel.addingIngredient.name
@@ -143,8 +143,8 @@ fun InputIngredientsScreen(
                     textDialogPre = stringResource(R.string.add_unknown_ingredient),
                     item = inputIngredientsViewModel.inputTextStateIngredient.text.toString(),
                     textDialogAft = stringResource(R.string.select_category_ingredient),
-                    textStyle = JustRecipesTheme.typography.titlePanel,
-                    textStyleCategory = JustRecipesTheme.typography.inputSearchField,
+                    textStyle = JustRecipesTheme.typography.title1,
+                    textStyleCategory = JustRecipesTheme.typography.input1,
                     textConfirmation = stringResource(R.string.confirmation),
                     textDismiss = stringResource(R.string.dismiss),
                     contentPadding = JustRecipesTheme.dimensions.contentPaddingField,

@@ -20,7 +20,7 @@ fun OwnRecipesScreen () {
 
         BasicText(
             text = stringResource(R.string.title_own_recipes),
-            style = JustRecipesTheme.typography.titlePanel,
+            style = JustRecipesTheme.typography.title1,
             //color = JustRecipesTheme.colors.onTitlePanel
         )
     }

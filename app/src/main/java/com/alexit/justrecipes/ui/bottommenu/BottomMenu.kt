@@ -35,7 +35,7 @@ fun BottomMenu(
                 iconDescription = screen.iconDescription,
                 sizeWidth = sizeWidth,
                 sizeHeight = JustRecipesTheme.dimensions.heightBottomMenu,
-                sizeButton = JustRecipesTheme.dimensions.sizeButton,
+                sizeIcon = JustRecipesTheme.dimensions.sizeIcon1,
                 colorBottomMenuSelected = JustRecipesTheme.colors.bottomMenuSelected,
                 colorOnBottomMenuSelected = JustRecipesTheme.colors.onBottomMenuSelected,
                 colorTopBorderButtonSelected = JustRecipesTheme.colors.topBorderButtonSelected,
@@ -47,7 +47,7 @@ fun BottomMenu(
                 iconDescription = screen.iconDescription,
                 sizeWidth = sizeWidth,
                 sizeHeight = JustRecipesTheme.dimensions.heightBottomMenu,
-                sizeButton = JustRecipesTheme.dimensions.sizeButton,
+                sizeIcon = JustRecipesTheme.dimensions.sizeIcon1,
                 colorOnBottomMenu = JustRecipesTheme.colors.onBottomMenu,
                 onClick = { buttonSelected(screen) }
             )
