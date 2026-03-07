@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -56,6 +57,7 @@ import java.text.DecimalFormatSymbols
 fun InputtedIngredientsList(
     inputtedIngredients: List<IngredientModel>,
     onDeleteClick: (IngredientModel) -> Unit,
+    onWeightClick: (Int, Float) -> Unit,
     iconDeleteIngredient: Int,
     descriptionIconDeleteIngredient: Int,
     colorIconDeleteIngredient: Color,
@@ -78,7 +80,7 @@ fun InputtedIngredientsList(
     sizeIconScale: Dp,
     radiusShape: Dp,
 ) {
-    val symbols: DecimalFormatSymbols = DecimalFormatSymbols.getInstance()
+    val keyboardController = LocalSoftwareKeyboardController.current
     LazyColumn(
         modifier = Modifier
             .consumeWindowInsets(paddingValues = PaddingValues(bottomMenuHeight))
@@ -133,8 +135,8 @@ fun InputtedIngredientsList(
                         imeAction = ImeAction.Done
                     ),
                     onKeyboardAction = KeyboardActionHandler {
-                        //onWeightClick(ingredient, state.text)
-                        //keyboardController?.hide()
+                        onWeightClick(ingredient.id, state.text.toString().toFloat())
+                        keyboardController?.hide()
                     },
                     cursorBrush = Brush.verticalGradient(
                         0.00f to Color.Transparent,
@@ -179,7 +181,7 @@ fun InputtedIngredientsList(
                                     color = { colorWeightIngredient },
                                     text = ingredient.unit
                                 )
-                            } else {
+                            } else if(ingredient.weight == null) {
                                 Box(
                                     modifier = Modifier
                                         .size(
@@ -196,6 +198,14 @@ fun InputtedIngredientsList(
                                     imageVector = ImageVector.vectorResource(iconScale),
                                     contentDescription = stringResource(descriptionIconScale),
                                     colorFilter = ColorFilter.tint(colorWeightIngredient)
+                                )
+                            }
+                            else if (ingredient.weight != null) {
+                                //val weight = ingredient.weight!!.toInt()
+                                BasicText(
+                                    style = textStyleWeightIngredient,
+                                    color = { colorWeightIngredient },
+                                    text = "${ingredient.weight!!.toInt()} ${ingredient.unit}"
                                 )
                             }
                         }

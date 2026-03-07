@@ -70,7 +70,6 @@ fun CustomSearchBar (
 ) {
     val colorField: Color
     val colorBorderField: Color
-    //val isFocusedIngredient = focusInputState.value
     if (state.text.isNotEmpty() || focusInputState.value) {
         colorField = focusedField
         colorBorderField = focusedBorderField

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.alexit.justrecipes.R
+import com.alexit.justrecipes.data.model.IngredientModel
 import com.alexit.justrecipes.ui.components.CustomDialog
 import com.alexit.justrecipes.ui.components.CustomPopup
 import com.alexit.justrecipes.ui.components.CustomSearchBar
@@ -46,8 +47,8 @@ fun InputIngredientsScreen(
                 focusInputState = inputIngredientsViewModel.focusInputIngredientState,
                 state = inputIngredientsViewModel.inputTextStateIngredient,
                 suggestions = inputIngredientsUiState.suggestionsIngredient,
-                onSuggestionClick = { inputIngredientsViewModel.selectSuggestionIngredient(suggestion = it) },
-                onDoneClick = { inputIngredientsViewModel.addInputtedIngredient(it) },
+                onSuggestionClick = { suggestion: String -> inputIngredientsViewModel.selectSuggestionIngredient(suggestion) },
+                onDoneClick = { ingredientName: String -> inputIngredientsViewModel.addInputtedIngredient(ingredientName) },
                 height = JustRecipesTheme.dimensions.heightFieldInput,
                 width = JustRecipesTheme.dimensions.widthInputtedIngredient,
                 textStyle = JustRecipesTheme.typography.inputSearchField,
@@ -68,7 +69,8 @@ fun InputIngredientsScreen(
             if (inputIngredientsViewModel.inputTextStateIngredient.text.isEmpty()) {
                 InputtedIngredientsList(
                     inputtedIngredients = inputIngredientsViewModel.inputtedIngredients,
-                    onDeleteClick = { inputIngredientsViewModel.updateIsDeleteIngredient(it) },
+                    onDeleteClick = { ingredient: IngredientModel -> inputIngredientsViewModel.updateIsDeleteIngredient(ingredient) },
+                    onWeightClick = { id: Int, weight: Float -> inputIngredientsViewModel.updateWeightIngredient(id, weight) },
                     iconDeleteIngredient = R.drawable.round_do_not_disturb_on_24,
                     descriptionIconDeleteIngredient = R.string.delete_inputted_ingredient,
                     colorIconDeleteIngredient = JustRecipesTheme.colors.iconDeleteIngredient,
@@ -129,7 +131,7 @@ fun InputIngredientsScreen(
             if (inputIngredientsUiState.isIngredientNew) {
                 MakeNewIngredient(
                     onDismissRequest = { inputIngredientsViewModel.updateIsIngredientNew() },
-                    onConfirmation = { inputIngredientsViewModel.addNewIngredient(it) },
+                    onConfirmation = { category: String -> inputIngredientsViewModel.addNewIngredient(category) },
                     selectedIndex = inputIngredientsViewModel.selectedIndexCategory,
                     heightDialog = JustRecipesTheme.dimensions.heightNewIngredientDialog,
                     widthDialog = JustRecipesTheme.dimensions.widthNewIngredientDialog,

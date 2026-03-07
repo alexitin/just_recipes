@@ -116,7 +116,7 @@ class InputIngredientsViewModel @Inject constructor(
         updateGSA()
         ingredientRepository.addInputtedIngredient(addingIngredient)
         _inputtedIngredients.add(0, addingIngredient)
-        selectedIndexCategory.value = -1
+        selectedIndexCategory.intValue = -1
         updateIsIngredientNew()
     }
 
@@ -148,8 +148,8 @@ class InputIngredientsViewModel @Inject constructor(
         }
     }
 
-    fun updateWeightIngredient(ingredient: IngredientModel, weught: Float) {
-
+    fun updateWeightIngredient(id: Int, weight: Float) {
+        inputtedIngredients.find { it.id == id }?.weight = weight
     }
 
     private fun updateGSA() {
