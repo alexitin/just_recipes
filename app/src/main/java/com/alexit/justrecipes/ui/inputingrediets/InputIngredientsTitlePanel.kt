@@ -18,10 +18,10 @@ import androidx.compose.ui.unit.Dp
 fun InputIngredientsTitlePanel(
     height: Dp,
     background: Color,
+    color: Color,
     padding: Dp,
     text: String,
-    style: TextStyle,
-    color: Color
+    style: TextStyle
 ) {
     Row(
         modifier = Modifier

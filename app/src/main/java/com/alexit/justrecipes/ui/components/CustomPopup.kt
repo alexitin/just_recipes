@@ -26,7 +26,7 @@ fun CustomPopup(
     contentPadding: Dp,
     widthPopup: Dp,
     colorBackground: Color,
-    colorStroke: Color,
+    colorBorder: Color,
     colorText: Color,
     radiusShape: Dp,
     borderThickness: Dp,
@@ -53,7 +53,7 @@ fun CustomPopup(
                 .border(
                     border = BorderStroke(
                         width = borderThickness,
-                        color = colorStroke
+                        color = colorBorder
                     ),
                     shape = RoundedCornerShape(size = radiusShape)
                 )

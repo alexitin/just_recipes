@@ -51,7 +51,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.alexit.justrecipes.data.model.IngredientModel
-import java.text.DecimalFormatSymbols
 
 @Composable
 fun InputtedIngredientsList(
@@ -62,12 +61,12 @@ fun InputtedIngredientsList(
     descriptionIconDeleteIngredient: Int,
     colorIconDeleteIngredient: Color,
     colorInputtedIngredientsField: Color,
-    textStyleInputtedIngredient: TextStyle,
     colorInputtedIngredientText: Color,
+    textStyleInputtedIngredient: TextStyle,
     iconScale: Int,
     descriptionIconScale: Int,
-    colorWeightIngredient: Color,
     colorBackgroundWeightIngredient: Color,
+    colorWeightIngredient: Color,
     textStyleWeightIngredient: TextStyle,
     width: Dp,
     bottomMenuHeight: Dp,

@@ -31,7 +31,7 @@ fun CustomDialog(
     heightDialog: Dp,
     widthDialog: Dp,
     colorBackground: Color,
-    colorStroke: Color,
+    colorBorder: Color,
     colorText: Color,
     radiusShape: Dp,
     borderThickness: Dp,
@@ -55,7 +55,7 @@ fun CustomDialog(
                 .border(
                     border = BorderStroke(
                         width = borderThickness,
-                        color = colorStroke
+                        color = colorBorder
                     ),
                     shape = RoundedCornerShape(size = radiusShape)
                 ),
@@ -82,7 +82,7 @@ fun CustomDialog(
                     .border(
                         border = BorderStroke(
                             width = borderThickness,
-                            color = colorStroke
+                            color = colorBorder
                         ),
                         shape = RoundedCornerShape(
                             bottomStart = radiusShape,
@@ -110,7 +110,7 @@ fun CustomDialog(
                 )
 
                 CustomDivider(
-                    color = colorStroke,
+                    color = colorBorder,
                     thickness = borderThickness.dpToPx(),
                     startX = 0f,
                     endX = 0f,

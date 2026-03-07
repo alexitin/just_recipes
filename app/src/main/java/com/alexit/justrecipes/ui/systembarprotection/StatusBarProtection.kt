@@ -13,7 +13,7 @@ import com.alexit.justrecipes.ui.theme.JustRecipesTheme
 
 @Composable
 fun StatusBarProtection(
-    color: Color = JustRecipesTheme.colors.titlePanel,
+    color: Color = JustRecipesTheme.colors.background1,
     heightProvider: () -> Float = calculateStatusHeight()
 ) {
     Canvas(Modifier.fillMaxSize()) {

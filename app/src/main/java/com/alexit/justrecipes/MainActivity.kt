@@ -10,11 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import com.alexit.justrecipes.ui.systembarprotection.NavigationBarProtection
 import com.alexit.justrecipes.ui.RecipesScreen
-import com.alexit.justrecipes.ui.inputingrediets.InputIngredientsViewModel
 import com.alexit.justrecipes.ui.theme.JustRecipesTheme
 import com.alexit.justrecipes.ui.systembarprotection.StatusBarProtection
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -26,7 +24,7 @@ class MainActivity : ComponentActivity() {
             JustRecipesTheme {
                 Box(
                     modifier = Modifier.fillMaxSize()
-                        .background(color = JustRecipesTheme.colors.background)
+                        .background(color = JustRecipesTheme.colors.background0)
                         //.pointerInput(Unit){}
                 ) {
                     StatusBarProtection()

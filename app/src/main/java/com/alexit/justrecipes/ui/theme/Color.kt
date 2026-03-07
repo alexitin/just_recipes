@@ -1,6 +1,5 @@
 package com.alexit.justrecipes.ui.theme
 
-import androidx.activity.ComponentDialog
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -28,57 +27,57 @@ val red1 = Color(0xFFEE5C4C)
 
 @Immutable
 data class CustomColors(
-    val background: Color,
-    val titlePanel: Color,
-    val onTitlePanel: Color,
+    val background0: Color,
+    val background1: Color,
+    val text1: Color,
     val dividerBottomMenu: Color,
     val bottomMenu: Color,
     val onBottomMenu: Color,
     val bottomMenuSelected: Color,
     val onBottomMenuSelected: Color,
     val topBorderButtonSelected: Color,
-    val unfocusedTextIngredient: Color,
-    val focusedTextIngredient: Color,
-    val unfocusedFieldIngredient: Color,
-    val focusedFieldIngredient: Color,
-    val unfocusedBorderFieldIngredient: Color,
-    val focusedBorderFieldIngredient: Color,
-    val inputtedIngredientsField: Color,
+    val background2: Color,
+    val border2: Color,
+    val text2: Color,
+    val background3: Color,
+    val border3: Color,
+    val text3: Color,
+    val background4: Color,
+    val text4: Color,
+    val background5: Color,
+    val text5: Color,
+    val background6: Color,
+    val border6: Color,
+    val text6: Color,
     val iconSearchIngredient: Color,
-    val inputtedIngredientsText: Color,
-    val iconDeleteIngredient: Color,
-    val weightIngredient: Color,
-    val backgroundWeightIngredient: Color,
-    val backgroundDialog: Color,
-    val strokeDialog: Color,
-    val textDialog: Color
+    val iconDeleteIngredient: Color
 )
 
 val themeColors = CustomColors(
-    background = green1,
-    titlePanel = green2,
-    onTitlePanel = green5,
+    background0 = green1,
+    background1 = green2,
+    text1 = green5,
     dividerBottomMenu = grey1,
     bottomMenu = green3,
     onBottomMenu = green4,
     bottomMenuSelected = green6,
     onBottomMenuSelected = green5,
     topBorderButtonSelected = green7,
-    unfocusedTextIngredient = green8,
-    focusedTextIngredient = black1,
-    unfocusedFieldIngredient = green9,
-    focusedFieldIngredient = black2,
-    unfocusedBorderFieldIngredient = green10,
-    focusedBorderFieldIngredient = brown1,
-    inputtedIngredientsField = brown3,
+    background2 = black2,
+    border2 = brown1,
+    text2 = black1,
+    background3 = green9,
+    border3 = green10,
+    text3 = green8,
+    background4 = brown3,
+    text4 = brown4,
+    background5 = black2,
+    text5 = brown5,
+    background6 = brown6,
+    border6 = brown1,
+    text6 = brown2,
     iconSearchIngredient = brown2,
-    inputtedIngredientsText = brown4,
-    iconDeleteIngredient = red1,
-    weightIngredient = brown5,
-    backgroundWeightIngredient = black2,
-    backgroundDialog = brown6,
-    strokeDialog = brown1,
-    textDialog = brown2
+    iconDeleteIngredient = red1
 )
 
 val LocalCustomColors = staticCompositionLocalOf {

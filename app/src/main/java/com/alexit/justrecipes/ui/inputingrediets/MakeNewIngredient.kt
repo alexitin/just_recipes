@@ -52,9 +52,9 @@ fun MakeNewIngredient(
     textDismiss: String,
     contentPadding: Dp,
     colorBackgroundCategory: Color,
-    colorStrokeCategory: Color,
+    colorBorderCategory: Color,
     listCategory: List<String>,
-    focusedTextColor: Color,
+    colorTextCategory: Color,
     colorBackgroundCategorySelected: Color
 ) {
     Dialog(onDismissRequest = onDismissRequest ) {
@@ -98,7 +98,7 @@ fun MakeNewIngredient(
                     .border(
                         border = BorderStroke(
                             width = borderThickness,
-                            color = colorStrokeCategory
+                            color = colorBorderCategory
                         )
                     )
                     .padding(start = contentPadding, end = contentPadding),
@@ -123,10 +123,10 @@ fun MakeNewIngredient(
                             .padding(contentPadding),
                         text = category,
                         style = textStyle,
-                        color = { focusedTextColor }
+                        color = { colorTextCategory }
                     )
                     CustomDivider(
-                        color = focusedTextColor,
+                        color = colorTextCategory,
                         thickness = borderThickness.dpToPx(),
                         startX = 0f,
                         endX = (widthDialog - contentPadding * 2).dpToPx(),
@@ -168,7 +168,7 @@ fun MakeNewIngredient(
                     text = textDismiss
                 )
                 CustomDivider(
-                    color = focusedTextColor,
+                    color = colorTextCategory,
                     thickness = borderThickness.dpToPx(),
                     startX = 0f,
                     endX = 0f,

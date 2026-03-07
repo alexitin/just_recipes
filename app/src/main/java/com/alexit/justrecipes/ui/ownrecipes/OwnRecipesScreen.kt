@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.alexit.justrecipes.R
-import com.alexit.justrecipes.ui.RecipesScreen
 import com.alexit.justrecipes.ui.theme.JustRecipesTheme
 
 @Composable
@@ -32,7 +31,7 @@ fun OwnRecipesScreen () {
 fun RecipesScreenPreview() {
     Box(
         modifier = Modifier.fillMaxSize()
-            .background(color = JustRecipesTheme.colors.background)
+            .background(color = JustRecipesTheme.colors.background0)
         //.pointerInput(Unit){}
     ) {
         OwnRecipesScreen()
