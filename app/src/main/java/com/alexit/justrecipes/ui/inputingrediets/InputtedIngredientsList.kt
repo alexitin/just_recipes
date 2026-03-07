@@ -21,14 +21,9 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.KeyboardActionHandler
-import androidx.compose.foundation.text.input.OutputTransformation
-import androidx.compose.foundation.text.input.byValue
 import androidx.compose.foundation.text.input.clearText
-import androidx.compose.foundation.text.input.delete
-import androidx.compose.foundation.text.input.insert
 import androidx.compose.foundation.text.input.maxLength
 import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.foundation.text.input.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -199,7 +194,7 @@ fun InputtedIngredientsList(
                                     colorFilter = ColorFilter.tint(colorWeightIngredient)
                                 )
                             }
-                            else if (ingredient.weight != null) {
+                            else {
                                 //val weight = ingredient.weight!!.toInt()
                                 BasicText(
                                     style = textStyleWeightIngredient,

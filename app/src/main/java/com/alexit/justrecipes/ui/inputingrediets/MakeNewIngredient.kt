@@ -48,6 +48,7 @@ fun MakeNewIngredient(
     item: String,
     textDialogAft: String,
     textStyle: TextStyle,
+    textStyleCategory: TextStyle,
     textConfirmation: String,
     textDismiss: String,
     contentPadding: Dp,
@@ -122,7 +123,7 @@ fun MakeNewIngredient(
                                 })
                             .padding(contentPadding),
                         text = category,
-                        style = textStyle,
+                        style = textStyleCategory,
                         color = { colorTextCategory }
                     )
                     CustomDivider(

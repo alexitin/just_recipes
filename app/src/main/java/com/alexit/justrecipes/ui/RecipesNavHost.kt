@@ -1,14 +1,11 @@
 package com.alexit.justrecipes.ui
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.alexit.justrecipes.ui.inputingrediets.InputIngredientsScreen
-import com.alexit.justrecipes.ui.inputingrediets.InputIngredientsViewModel
 import com.alexit.justrecipes.ui.ownrecipes.OwnRecipesScreen
 import com.alexit.justrecipes.ui.requestai.RequestAiScreen
 import com.alexit.justrecipes.ui.searchrecipe.SearchRecipeScreen

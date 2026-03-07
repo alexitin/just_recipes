@@ -144,6 +144,7 @@ fun InputIngredientsScreen(
                     item = inputIngredientsViewModel.inputTextStateIngredient.text.toString(),
                     textDialogAft = stringResource(R.string.select_category_ingredient),
                     textStyle = JustRecipesTheme.typography.titlePanel,
+                    textStyleCategory = JustRecipesTheme.typography.inputSearchField,
                     textConfirmation = stringResource(R.string.confirmation),
                     textDismiss = stringResource(R.string.dismiss),
                     contentPadding = JustRecipesTheme.dimensions.contentPaddingField,
