@@ -50,14 +50,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.alexit.justrecipes.data.model.IngredientModel
-import com.alexit.justrecipes.utility.DecimalFormatter
 import java.text.DecimalFormatSymbols
 
 @Composable
 fun InputtedIngredientsList(
     inputtedIngredients: List<IngredientModel>,
     onDeleteClick: (IngredientModel) -> Unit,
-    decimalFormatter: DecimalFormatter,
     iconDeleteIngredient: Int,
     descriptionIconDeleteIngredient: Int,
     colorIconDeleteIngredient: Color,
@@ -110,7 +108,6 @@ fun InputtedIngredientsList(
                     contentDescription = stringResource(descriptionIconDeleteIngredient),
                     colorFilter = ColorFilter.tint(colorIconDeleteIngredient)
                 )
-
                 BasicTextField(
                     state = state,
                     modifier = Modifier
@@ -124,17 +121,15 @@ fun InputtedIngredientsList(
                         .padding(contentPadding),
                     enabled = true,
                     inputTransformation = InputTransformation.maxLength(5).then {
-                        var isDecimalSeparator = 0
-                        if (asCharSequence()[0] == '.') insert(0,"0")
-
+                        if (asCharSequence().contains("\\D".toRegex())) revertAllChanges()
+                        if (asCharSequence().matches("0+".toRegex())) revertAllChanges()
                     },
-                    //outputTransformation = OutputTransformation {},
                     textStyle = textStyleWeightIngredient.copy(
                         textAlign = TextAlign.End,
                         color = colorWeightIngredient
                     ),
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Decimal,
+                        keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Done
                     ),
                     onKeyboardAction = KeyboardActionHandler {

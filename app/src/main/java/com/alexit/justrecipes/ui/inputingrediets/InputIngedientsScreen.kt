@@ -16,7 +16,6 @@ import com.alexit.justrecipes.ui.components.CustomDialog
 import com.alexit.justrecipes.ui.components.CustomPopup
 import com.alexit.justrecipes.ui.components.CustomSearchBar
 import com.alexit.justrecipes.ui.theme.JustRecipesTheme
-import com.alexit.justrecipes.utility.DecimalFormatter
 
 @Composable
 fun InputIngredientsScreen(
@@ -70,7 +69,6 @@ fun InputIngredientsScreen(
                 InputtedIngredientsList(
                     inputtedIngredients = inputIngredientsViewModel.inputtedIngredients,
                     onDeleteClick = { inputIngredientsViewModel.updateIsDeleteIngredient(it) },
-                    decimalFormatter = DecimalFormatter(),
                     iconDeleteIngredient = R.drawable.round_do_not_disturb_on_24,
                     descriptionIconDeleteIngredient = R.string.delete_inputted_ingredient,
                     colorIconDeleteIngredient = JustRecipesTheme.colors.iconDeleteIngredient,

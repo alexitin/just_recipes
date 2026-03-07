@@ -116,6 +116,7 @@ class InputIngredientsViewModel @Inject constructor(
         updateGSA()
         ingredientRepository.addInputtedIngredient(addingIngredient)
         _inputtedIngredients.add(0, addingIngredient)
+        selectedIndexCategory.value = -1
         updateIsIngredientNew()
     }
 
