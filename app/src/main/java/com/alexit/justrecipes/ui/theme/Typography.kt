@@ -41,7 +41,7 @@ val themeTypography = CustomTypography(
     input2 = TextStyle(
         fontFamily = NunitoFont,
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 16.sp,
+        fontSize = 20.sp,
         textDecoration = TextDecoration.Underline
     )
 )

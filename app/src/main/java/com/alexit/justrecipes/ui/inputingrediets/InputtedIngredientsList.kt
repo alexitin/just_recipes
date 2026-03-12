@@ -129,8 +129,10 @@ fun InputtedIngredientsList(
                         imeAction = ImeAction.Done
                     ),
                     onKeyboardAction = KeyboardActionHandler {
-                        onWeightClick(ingredient.id, state.text.toString().toFloat())
-                        keyboardController?.hide()
+                        if (state.text.isNotEmpty()) {
+                            onWeightClick(ingredient.id, state.text.toString().toFloat())
+                            keyboardController?.hide()
+                        }
                     },
                     cursorBrush = Brush.verticalGradient(
                         0.00f to Color.Transparent,
@@ -195,7 +197,6 @@ fun InputtedIngredientsList(
                                 )
                             }
                             else {
-                                //val weight = ingredient.weight!!.toInt()
                                 BasicText(
                                     style = textStyleWeightIngredient,
                                     color = { colorWeightIngredient },

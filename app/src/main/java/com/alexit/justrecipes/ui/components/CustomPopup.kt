@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.Popup
 
 @Composable
@@ -35,9 +36,8 @@ fun CustomPopup(
     textPopupAft: String,
     item: String
 ) {
-    Popup(
+    Dialog(
         onDismissRequest = onDismissRequest,
-        alignment = Alignment.Center,
     ) {
         Box(
             modifier = Modifier

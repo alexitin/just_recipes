@@ -44,11 +44,7 @@ data class CustomColors(
     val text3: Color,
     val background4: Color,
     val text4: Color,
-    val background5: Color,
     val text5: Color,
-    val background6: Color,
-    val border6: Color,
-    val text6: Color,
     val iconSearchIngredient: Color,
     val iconDeleteIngredient: Color
 )
@@ -71,11 +67,7 @@ val themeColors = CustomColors(
     text3 = green8,
     background4 = brown3,
     text4 = brown4,
-    background5 = black2,
     text5 = brown5,
-    background6 = brown6,
-    border6 = brown1,
-    text6 = brown2,
     iconSearchIngredient = brown2,
     iconDeleteIngredient = red1
 )

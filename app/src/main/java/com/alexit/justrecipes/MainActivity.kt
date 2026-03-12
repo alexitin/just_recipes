@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
                 Box(
                     modifier = Modifier.fillMaxSize()
                         .background(color = JustRecipesTheme.colors.background0)
-                        //.pointerInput(Unit){}
                 ) {
                     StatusBarProtection()
                     NavigationBarProtection()
