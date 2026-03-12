@@ -91,8 +91,10 @@ fun CustomSearchBar (
             imeAction = ImeAction.Done
         ),
         onKeyboardAction = KeyboardActionHandler {
-            onDoneClick(state.text.toString().trim())
-            keyboardController?.hide()
+            if (state.text.isNotEmpty()) {
+                onDoneClick(state.text.toString().trim())
+                keyboardController?.hide()
+            }
         },
         lineLimits = TextFieldLineLimits.SingleLine,
         cursorBrush = Brush.verticalGradient(

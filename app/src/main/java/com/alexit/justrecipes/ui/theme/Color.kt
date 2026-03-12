@@ -22,7 +22,6 @@ val brown2 = Color(0x99AA9669)
 val brown3 = Color(0xFFE5E2CE)
 val brown4 = Color(0xFFAA9669)
 val brown5 = Color(0x88AA9669)
-val brown6 = Color(0xFFFFF7E2)
 val red1 = Color(0xFFEE5C4C)
 
 @Immutable
