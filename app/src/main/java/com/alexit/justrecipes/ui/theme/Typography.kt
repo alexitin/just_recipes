@@ -41,9 +41,10 @@ val themeTypography = CustomTypography(
     input2 = TextStyle(
         fontFamily = NunitoFont,
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 20.sp,
+        fontSize = 18.sp,
         textDecoration = TextDecoration.Underline
     )
+
 )
 
 val LocalCustomTypography = staticCompositionLocalOf {

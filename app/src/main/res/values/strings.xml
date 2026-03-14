@@ -22,4 +22,7 @@
     <string name="already_exist">уже есть в списке</string>
     <string name="add_unknown_ingredient">Добавить неизвестный ингредиент</string>
     <string name="select_category_ingredient">Веберите категорию продукта:</string>
+    <string name="g">г</string>
+    <string name="ml">мл</string>
+    <string name="piece">шт.</string>
 </resources>

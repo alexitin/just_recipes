@@ -1,5 +1,6 @@
 package com.alexit.justrecipes.ui.inputingrediets
 
+import android.content.res.Resources
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
@@ -8,11 +9,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alexit.justrecipes.R
 import com.alexit.justrecipes.data.model.IngredientModel
 import com.alexit.justrecipes.data.repository.IngredientRepository
 import com.alexit.justrecipes.utility.GSuffArray
@@ -26,7 +30,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InputIngredientsViewModel @Inject constructor(
-    private val ingredientRepository: IngredientRepository
+    private val ingredientRepository: IngredientRepository,
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(InputIngredientsUiState())
@@ -87,7 +91,6 @@ class InputIngredientsViewModel @Inject constructor(
             addingIngredient = IngredientModel(
                 id = ingredients.size + 1,
                 name = ingredientName,
-                unit = "г",
                 weight = null,
                 category = ""
             )
@@ -108,7 +111,6 @@ class InputIngredientsViewModel @Inject constructor(
             id = addingIngredient.id,
             name = addingIngredient.name,
             weight = addingIngredient.weight,
-            unit = addingIngredient.unit,
             category = category
         )
         ingredientRepository.addIngredient(addingIngredient)

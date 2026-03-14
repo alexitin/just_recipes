@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="liquid_foodstuff">
+        <item>вода</item>
+        <item>безалкогольный напиток</item>
+        <item>слабоалкогольный напиток</item>
+        <item>крепкий алкогольный напиток</item>
+        <item>кисломолочный напиток</item>
+        <item>молоко и сливки</item>
+        <item>бульон</item>
+        <item>рассол</item>
+    </string-array>
+    <string-array name="piece_foodstuff">
+        <item>яйца</item>
+        <item>сосиски сардельки колбаски</item>
+    </string-array>
+</resources>

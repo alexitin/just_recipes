@@ -83,7 +83,7 @@ fun MakeNewIngredient(
                     textAlign = TextAlign.Center
                 ),
                 color = { colorText },
-                text = "$textDialogPre\n\r$item?\n\r$textDialogAft"
+                text = "$textDialogPre\n\r${item.trim()}?\n\r$textDialogAft"
             )
             LazyColumn(
                 modifier = Modifier

@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -45,6 +46,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import com.alexit.justrecipes.R
 import com.alexit.justrecipes.data.model.IngredientModel
 
 @Composable
@@ -75,6 +77,8 @@ fun InputtedIngredientsList(
     radiusShape: Dp,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val liquid = stringArrayResource(R.array.liquid_foodstuff)
+    val piece = stringArrayResource(R.array.piece_foodstuff)
     LazyColumn(
         modifier = Modifier
             .consumeWindowInsets(paddingValues = PaddingValues(bottomMenuHeight))
@@ -83,6 +87,13 @@ fun InputtedIngredientsList(
         items(items = inputtedIngredients, key = { inputtedIngredients.indexOf(it) }) { ingredient ->
             val state = rememberTextFieldState()
             var isFocusedWeight by remember { mutableStateOf(false) }
+            val unit: String = if (liquid.contains(ingredient.category)) {
+                stringResource(R.string.ml)
+            } else if (piece.contains(ingredient.category)) {
+                stringResource(R.string.piece)
+            } else {
+                stringResource(R.string.g)
+            }
             Row(
                 modifier = Modifier
                     .width(width)
@@ -116,7 +127,7 @@ fun InputtedIngredientsList(
                         )
                         .padding(contentPadding),
                     enabled = true,
-                    inputTransformation = InputTransformation.maxLength(5).then {
+                    inputTransformation = InputTransformation.maxLength(4).then {
                         if (asCharSequence().contains("\\D".toRegex())) revertAllChanges()
                         if (asCharSequence().matches("0+".toRegex())) revertAllChanges()
                     },
@@ -175,7 +186,7 @@ fun InputtedIngredientsList(
                                 BasicText(
                                     style = textStyleWeightIngredient,
                                     color = { colorWeightIngredient },
-                                    text = ingredient.unit
+                                    text = unit
                                 )
                             } else if(ingredient.weight == null) {
                                 Box(
@@ -200,7 +211,7 @@ fun InputtedIngredientsList(
                                 BasicText(
                                     style = textStyleWeightIngredient,
                                     color = { colorWeightIngredient },
-                                    text = "${ingredient.weight!!.toInt()} ${ingredient.unit}"
+                                    text = "${ingredient.weight!!.toInt()} $unit"
                                 )
                             }
                         }
