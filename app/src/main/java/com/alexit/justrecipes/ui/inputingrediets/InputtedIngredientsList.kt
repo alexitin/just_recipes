@@ -84,8 +84,11 @@ fun InputtedIngredientsList(
             .consumeWindowInsets(paddingValues = PaddingValues(bottomMenuHeight))
             .imePadding()
     ) {
-        items(items = inputtedIngredients, key = { inputtedIngredients.indexOf(it) }) { ingredient ->
-            val state = rememberTextFieldState()
+        items(items = inputtedIngredients, key = { it.id }) { ingredient ->
+            val state = rememberTextFieldState(
+                if (ingredient.weight != null) ingredient.weight!!.toInt().toString()
+                else ""
+            )
             var isFocusedWeight by remember { mutableStateOf(false) }
             val unit: String = if (liquid.contains(ingredient.category)) {
                 stringResource(R.string.ml)
@@ -156,7 +159,6 @@ fun InputtedIngredientsList(
                     decorator = { innerTextField ->
                         Row(
                             modifier = Modifier,
-                            horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             BasicText(
@@ -184,11 +186,13 @@ fun InputtedIngredientsList(
                                     innerTextField()
                                 }
                                 BasicText(
-                                    style = textStyleWeightIngredient,
+                                    style = textStyleWeightIngredient.copy(
+                                        textAlign = TextAlign.Left
+                                    ),
                                     color = { colorWeightIngredient },
                                     text = unit
                                 )
-                            } else if(ingredient.weight == null) {
+                            } else {
                                 Box(
                                     modifier = Modifier
                                         .size(
@@ -205,13 +209,6 @@ fun InputtedIngredientsList(
                                     imageVector = ImageVector.vectorResource(iconScale),
                                     contentDescription = stringResource(descriptionIconScale),
                                     colorFilter = ColorFilter.tint(colorWeightIngredient)
-                                )
-                            }
-                            else {
-                                BasicText(
-                                    style = textStyleWeightIngredient,
-                                    color = { colorWeightIngredient },
-                                    text = "${ingredient.weight!!.toInt()} $unit"
                                 )
                             }
                         }

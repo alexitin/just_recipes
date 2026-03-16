@@ -105,7 +105,7 @@ fun MakeNewIngredient(
                     .padding(start = contentPadding, end = contentPadding),
                 verticalArrangement = Arrangement.Center
             ) {
-                items(items = listCategory, key = { listCategory.indexOf(it) }) { category ->
+                items(items = listCategory) { category ->
                     BasicText(
                         modifier = Modifier
                             .fillMaxWidth()

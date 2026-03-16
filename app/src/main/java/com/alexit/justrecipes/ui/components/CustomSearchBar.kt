@@ -197,7 +197,7 @@ fun CustomSearchBar (
                 .padding(start = contentPadding, end = contentPadding),
             verticalArrangement = Arrangement.Center
         ) {
-            items(items = suggestions, key = { suggestions.indexOf(it) }) { suggestion ->
+            items(items = suggestions) { suggestion ->
                 BasicText(
                     modifier = Modifier
                         .padding(top = contentPadding, bottom = contentPadding)

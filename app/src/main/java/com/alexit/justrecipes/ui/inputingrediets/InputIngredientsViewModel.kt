@@ -1,6 +1,5 @@
 package com.alexit.justrecipes.ui.inputingrediets
 
-import android.content.res.Resources
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
@@ -9,14 +8,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringArrayResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alexit.justrecipes.R
 import com.alexit.justrecipes.data.model.IngredientModel
 import com.alexit.justrecipes.data.repository.IngredientRepository
 import com.alexit.justrecipes.utility.GSuffArray
@@ -39,7 +35,6 @@ class InputIngredientsViewModel @Inject constructor(
     private lateinit var _inputtedIngredients: SnapshotStateList<IngredientModel>
     val inputtedIngredients: List<IngredientModel> get() = _inputtedIngredients
     var ingredients = mutableListOf<IngredientModel>()
-    //val ingredients: List<IngredientModel> = _ingredients
     private lateinit var gsaIngredients: GSuffArray
 
     init {

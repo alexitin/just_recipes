@@ -41,14 +41,14 @@ class IngredientsSourceDB : IngredientsSource {
         IngredientModel(29, "сметана 25%", null, "кисломолочный продукт")
     )
     override val listInputtedIngredients: MutableList<IngredientModel> = mutableListOf(
-        IngredientModel(1, "томаты консервированные в собственном соку без соли", null, "овощи"),
-        IngredientModel(2, "лосось", null, "рыба"),
-        IngredientModel(3, "свиная отбивная на косточке", null, "мясо"),
-        IngredientModel(4, "морковь по корейски", null, "овощи"),
-        IngredientModel(5, "баранина", null, "мясо"),
-        IngredientModel(6, "фасоль красная", null, "бобовые"),
-        IngredientModel(7, "кефир", null, "кисломолочный напиток"),
-        IngredientModel(8, "яйца куриные", null, "яйца"),
+        IngredientModel(40, "томаты консервированные в собственном соку без соли", null, "овощи"),
+        IngredientModel(41, "лосось", null, "рыба"),
+        IngredientModel(42, "свиная отбивная на косточке", null, "мясо"),
+        IngredientModel(43, "морковь по корейски", null, "овощи"),
+        IngredientModel(44, "баранина", null, "мясо"),
+        IngredientModel(45, "фасоль красная", null, "бобовые"),
+        IngredientModel(46, "кефир", null, "кисломолочный напиток"),
+        IngredientModel(47, "яйца куриные", null, "яйца"),
     )
 }
 
