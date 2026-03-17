@@ -186,9 +186,7 @@ fun InputtedIngredientsList(
                                     innerTextField()
                                 }
                                 BasicText(
-                                    style = textStyleWeightIngredient.copy(
-                                        textAlign = TextAlign.Left
-                                    ),
+                                    style = textStyleWeightIngredient,
                                     color = { colorWeightIngredient },
                                     text = unit
                                 )

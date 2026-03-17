@@ -23,6 +23,7 @@ fun InputIngredientsScreen(
    inputIngredientsViewModel: InputIngredientsViewModel = hiltViewModel()
 ) {
     val inputIngredientsUiState by inputIngredientsViewModel.uiState.collectAsState()
+    val suggestions = inputIngredientsViewModel.getSuggestionsIngredient(JustRecipesTheme.colors.background3)
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -42,11 +43,10 @@ fun InputIngredientsScreen(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            inputIngredientsViewModel.updateSuggestionsIngredient(JustRecipesTheme.colors.background3)
             CustomSearchBar(
                 focusInputState = inputIngredientsViewModel.focusInputIngredientState,
                 state = inputIngredientsViewModel.inputTextStateIngredient,
-                suggestions = inputIngredientsUiState.suggestionsIngredient,
+                suggestions = suggestions,
                 onSuggestionClick = { suggestion: String -> inputIngredientsViewModel.selectSuggestionIngredient(suggestion) },
                 onDoneClick = { ingredientName: String -> inputIngredientsViewModel.addInputtedIngredient(ingredientName) },
                 height = JustRecipesTheme.dimensions.heightFieldInput,
@@ -141,7 +141,7 @@ fun InputIngredientsScreen(
                     radiusShape = JustRecipesTheme.dimensions.radiusCornerField,
                     borderThickness = JustRecipesTheme.dimensions.borderThickness,
                     textDialogPre = stringResource(R.string.add_unknown_ingredient),
-                    item = inputIngredientsViewModel.inputTextStateIngredient.text.toString(),
+                    item = inputIngredientsViewModel.addingIngredient.name,
                     textDialogAft = stringResource(R.string.select_category_ingredient),
                     textStyle = JustRecipesTheme.typography.title1,
                     textStyleCategory = JustRecipesTheme.typography.input1,

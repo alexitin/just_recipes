@@ -83,7 +83,7 @@ fun MakeNewIngredient(
                     textAlign = TextAlign.Center
                 ),
                 color = { colorText },
-                text = "$textDialogPre\n\r${item.trim()}?\n\r$textDialogAft"
+                text = "$textDialogPre\n\r$item?\n\r$textDialogAft"
             )
             LazyColumn(
                 modifier = Modifier
@@ -118,8 +118,9 @@ fun MakeNewIngredient(
                                 selected = listCategory.indexOf(category) == selectedIndex.value,
                                 onClick = {
                                     if (selectedIndex.value != listCategory.indexOf(category))
-                                        { selectedIndex.value = listCategory.indexOf(category) }
-                                        else {selectedIndex.value = -1}
+                                    { selectedIndex.value = listCategory.indexOf(category) }
+                                    else
+                                    { selectedIndex.value = -1 }
                                 })
                             .padding(contentPadding),
                         text = category,

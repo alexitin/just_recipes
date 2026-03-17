@@ -51,7 +51,7 @@ class InputIngredientsViewModel @Inject constructor(
     var focusInputIngredientState = mutableStateOf(false)
     var selectedIndexCategory = mutableIntStateOf(-1)
 
-    fun updateSuggestionsIngredient(colorMatched: Color) {
+    fun getSuggestionsIngredient(colorMatched: Color): List<AnnotatedString> {
         val query = inputTextStateIngredient.text.toString()
         val suggestions = highlight(
             color = colorMatched,
@@ -59,9 +59,7 @@ class InputIngredientsViewModel @Inject constructor(
             items = ingredients.map { it.name },
             matches = findMatchingIndex(query, gsaIngredients)
         )
-        _uiState.update { currentState ->
-            currentState.copy(suggestionsIngredient = suggestions)
-        }
+        return suggestions
     }
 
     fun selectSuggestionIngredient(suggestion: String) {
