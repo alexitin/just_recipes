@@ -84,7 +84,6 @@ class InputIngredientsViewModel @Inject constructor(
             addingIngredient = IngredientModel(
                 id = ingredients.size + 1,
                 name = ingredientName,
-                weight = null,
                 category = ""
             )
             _uiState.update { currentState ->
@@ -103,7 +102,6 @@ class InputIngredientsViewModel @Inject constructor(
         addingIngredient = IngredientModel(
             id = addingIngredient.id,
             name = addingIngredient.name,
-            weight = addingIngredient.weight,
             category = category
         )
         ingredientRepository.addIngredient(addingIngredient)
@@ -143,7 +141,8 @@ class InputIngredientsViewModel @Inject constructor(
         }
     }
 
-    fun updateWeightIngredient(id: Int, weight: Float) {
+    fun updateWeightIngredient(id: Int, weight: Int) {
+        ingredientRepository.updateWeightIngredient(id, weight)
         inputtedIngredients.find { it.id == id }?.weight = weight
     }
 

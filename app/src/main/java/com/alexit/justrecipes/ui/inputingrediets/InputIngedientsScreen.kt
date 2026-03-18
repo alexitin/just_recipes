@@ -70,7 +70,7 @@ fun InputIngredientsScreen(
                 InputtedIngredientsList(
                     inputtedIngredients = inputIngredientsViewModel.inputtedIngredients,
                     onDeleteClick = { ingredient: IngredientModel -> inputIngredientsViewModel.updateIsDeleteIngredient(ingredient) },
-                    onWeightClick = { id: Int, weight: Float -> inputIngredientsViewModel.updateWeightIngredient(id, weight) },
+                    onWeightClick = { id: Int, weight: Int -> inputIngredientsViewModel.updateWeightIngredient(id, weight) },
                     iconDeleteIngredient = R.drawable.round_do_not_disturb_on_24,
                     descriptionIconDeleteIngredient = R.string.delete_inputted_ingredient,
                     colorIconDeleteIngredient = JustRecipesTheme.colors.iconDeleteIngredient,

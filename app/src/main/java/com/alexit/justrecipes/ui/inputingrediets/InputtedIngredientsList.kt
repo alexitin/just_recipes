@@ -53,7 +53,7 @@ import com.alexit.justrecipes.data.model.IngredientModel
 fun InputtedIngredientsList(
     inputtedIngredients: List<IngredientModel>,
     onDeleteClick: (IngredientModel) -> Unit,
-    onWeightClick: (Int, Float) -> Unit,
+    onWeightClick: (Int, Int) -> Unit,
     iconDeleteIngredient: Int,
     descriptionIconDeleteIngredient: Int,
     colorIconDeleteIngredient: Color,
@@ -85,10 +85,7 @@ fun InputtedIngredientsList(
             .imePadding()
     ) {
         items(items = inputtedIngredients, key = { it.id }) { ingredient ->
-            val state = rememberTextFieldState(
-                if (ingredient.weight != null) ingredient.weight!!.toInt().toString()
-                else ""
-            )
+            val state = rememberTextFieldState(ingredient.weight?.toString() ?: "")
             var isFocusedWeight by remember { mutableStateOf(false) }
             val unit: String = if (liquid.contains(ingredient.category)) {
                 stringResource(R.string.ml)
@@ -144,7 +141,7 @@ fun InputtedIngredientsList(
                     ),
                     onKeyboardAction = KeyboardActionHandler {
                         if (state.text.isNotEmpty()) {
-                            onWeightClick(ingredient.id, state.text.toString().toFloat())
+                            onWeightClick(ingredient.id, state.text.toString().toInt())
                             keyboardController?.hide()
                         }
                     },

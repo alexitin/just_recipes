@@ -10,7 +10,7 @@ interface IngredientRepository {
     fun getInputtedIngredients(): MutableList<IngredientModel>
     fun addInputtedIngredient(ingredient: IngredientModel)
     fun deleteInputtedIngredient(ingredient: IngredientModel)
-    fun updateWeightIngredient(ingredient: IngredientModel, weight: Float)
+    fun updateWeightIngredient(id: Int, weight: Int)
 }
 
 class IngredientRepositoryImpl(
@@ -37,9 +37,8 @@ class IngredientRepositoryImpl(
         ingredientsSource.listInputtedIngredients.remove(ingredient)
     }
 
-    override fun updateWeightIngredient(ingredient: IngredientModel, weight: Float) {
-        val index = ingredientsSource.listInputtedIngredients.indexOf(ingredient)
-        ingredient.weight = weight
-        ingredientsSource.listInputtedIngredients[index] = ingredient
+    override fun updateWeightIngredient(id: Int, weight: Int) {
+        val index = ingredientsSource.listInputtedIngredients.indexOfFirst { it.id == id }
+        ingredientsSource.listInputtedIngredients[index].weight = weight
     }
 }
