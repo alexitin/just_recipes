@@ -38,7 +38,6 @@ class IngredientRepositoryImpl(
     }
 
     override fun updateWeightIngredient(id: Int, weight: Int) {
-        val index = ingredientsSource.listInputtedIngredients.indexOfFirst { it.id == id }
-        ingredientsSource.listInputtedIngredients[index].weight = weight
+        ingredientsSource.listInputtedIngredients.find { it.id == id }?.weight = weight
     }
 }
