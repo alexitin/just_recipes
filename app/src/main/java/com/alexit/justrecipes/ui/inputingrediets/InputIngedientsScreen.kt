@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,7 +18,9 @@ import com.alexit.justrecipes.data.model.IngredientModel
 import com.alexit.justrecipes.ui.components.CustomDialog
 import com.alexit.justrecipes.ui.components.CustomPopup
 import com.alexit.justrecipes.ui.components.CustomSearchBar
+import com.alexit.justrecipes.ui.components.SuggestionsState
 import com.alexit.justrecipes.ui.theme.JustRecipesTheme
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable
@@ -46,7 +50,6 @@ fun InputIngredientsScreen(
             CustomSearchBar(
                 state = inputIngredientsViewModel.inputTextStateIngredient,
                 ingredientsName = inputIngredientsViewModel.ingredients.map { it.name }.toPersistentList(),
-                //suggestions = inputIngredientsViewModel.suggestions,
                 onSuggestionClick = { suggestion: String -> inputIngredientsViewModel.selectSuggestionIngredient(suggestion) },
                 onDoneClick = { ingredientName: String -> inputIngredientsViewModel.addInputtedIngredient(ingredientName) },
                 height = JustRecipesTheme.dimensions.heightFieldInput,
@@ -158,4 +161,5 @@ fun InputIngredientsScreen(
         }
     }
 }
+
 

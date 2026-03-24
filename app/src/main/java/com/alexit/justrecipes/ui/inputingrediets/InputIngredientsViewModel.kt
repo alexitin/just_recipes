@@ -29,16 +29,14 @@ class InputIngredientsViewModel @Inject constructor(
 
     private lateinit var _inputtedIngredients: SnapshotStateList<IngredientModel>
     val inputtedIngredients: List<IngredientModel> get() = _inputtedIngredients
-    var ingredients = mutableListOf<IngredientModel>()
+    private lateinit var _ingredients: SnapshotStateList<IngredientModel>
+    val ingredients: List<IngredientModel> get() = _ingredients
     val inputTextStateIngredient = TextFieldState()
-    private lateinit var gsaIngredients: GSuffArray
-
 
     init {
         viewModelScope.launch {
-            loadIngredients()
+            _ingredients = loadIngredients()
             _inputtedIngredients = loadInputtedIngredients()
-            updateGSA()
         }
     }
 
@@ -89,8 +87,7 @@ class InputIngredientsViewModel @Inject constructor(
             category = category
         )
         ingredientRepository.addIngredient(addingIngredient)
-        ingredients.add(addingIngredient)
-        updateGSA()
+        _ingredients.add(addingIngredient)
         ingredientRepository.addInputtedIngredient(addingIngredient)
         _inputtedIngredients.add(0, addingIngredient)
         selectedIndexCategory.intValue = -1
@@ -130,12 +127,8 @@ class InputIngredientsViewModel @Inject constructor(
         inputtedIngredients.find { it.id == id }?.weight = weight
     }
 
-    private fun updateGSA() {
-            gsaIngredients = GSuffArray(*ingredients.map { it.name }.toTypedArray())
-    }
-
-    private fun loadIngredients () {
-        ingredients += ingredientRepository.getIngredients()
+    private fun loadIngredients(): SnapshotStateList<IngredientModel> {
+        return ingredientRepository.getIngredients().toMutableStateList()
     }
 
     private fun loadInputtedIngredients(): SnapshotStateList<IngredientModel> {

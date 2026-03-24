@@ -54,15 +54,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alexit.justrecipes.R
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.withContext
 
-@OptIn(FlowPreview::class)
 @Composable
 fun CustomSearchBar (
     state: TextFieldState,
     ingredientsName: PersistentList<String>,
-    //suggestions: List<AnnotatedString>,
     onSuggestionClick: (String) -> Unit,
     onDoneClick: (String) -> Unit,
     height: Dp,
@@ -94,7 +94,7 @@ fun CustomSearchBar (
     }
     val keyboardController = LocalSoftwareKeyboardController.current
     val suggestionsState = rememberSuggestionsState(items = ingredientsName)
-    //val suggestions = suggestionsState.suggestions.collectAsStateWithLifecycle().value
+
     BasicTextField(
         state = state,
         modifier = Modifier
@@ -200,7 +200,7 @@ fun CustomSearchBar (
     )
     if (state.text.isNotEmpty()) {
         val suggestions = suggestionsState.suggestions.collectAsStateWithLifecycle().value
-        LazyColumn(
+            LazyColumn(
             modifier = Modifier
                 .consumeWindowInsets(paddingValues = PaddingValues(bottomMenuHeight))
                 .imePadding()
@@ -220,7 +220,7 @@ fun CustomSearchBar (
                 .animateContentSize(),
             verticalArrangement = Arrangement.Center
         ) {
-            items(items = suggestions, key = { suggestion -> suggestion.text } ) { suggestion ->
+            items(items = suggestions) { suggestion ->
                 BasicText(
                     modifier = Modifier
                         .padding(top = contentPadding, bottom = contentPadding)
@@ -243,20 +243,24 @@ fun CustomSearchBar (
             }
         }
     }
+
     LaunchedEffect(state.text) {
-        suggestionsState.suggestions.update {
-            highlight(
-                color = unfocusedField,
-                query = state.text.toString().trim(),
-                items = ingredientsName,
-                matches = suggestionsState.findMatchingIndex(state.text.toString().trim())
-            )
+        delay(300)
+        withContext(Dispatchers.IO) {
+            suggestionsState.suggestions.update {
+                highlight(
+                    color = unfocusedField,
+                    query = state.text.toString().trim(),
+                    items = ingredientsName,
+                    matches = suggestionsState.findMatchingIndex(state.text.toString().trim())
+                )
+            }
         }
     }
 }
 
 @Composable
-fun rememberSuggestionsState(items: PersistentList<String>): SuggestionsState {
+private fun rememberSuggestionsState(items: PersistentList<String>): SuggestionsState {
     val scope = rememberCoroutineScope()
     return remember { SuggestionsState(scope, items) }
 }
