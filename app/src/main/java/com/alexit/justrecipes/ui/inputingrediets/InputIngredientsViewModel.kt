@@ -4,13 +4,8 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexit.justrecipes.data.model.IngredientModel
@@ -35,7 +30,9 @@ class InputIngredientsViewModel @Inject constructor(
     private lateinit var _inputtedIngredients: SnapshotStateList<IngredientModel>
     val inputtedIngredients: List<IngredientModel> get() = _inputtedIngredients
     var ingredients = mutableListOf<IngredientModel>()
+    val inputTextStateIngredient = TextFieldState()
     private lateinit var gsaIngredients: GSuffArray
+
 
     init {
         viewModelScope.launch {
@@ -44,23 +41,10 @@ class InputIngredientsViewModel @Inject constructor(
             updateGSA()
         }
     }
+
     lateinit var deletingIngredient: IngredientModel
     lateinit var addingIngredient: IngredientModel
-
-    val inputTextStateIngredient = TextFieldState()
-    var focusInputIngredientState = mutableStateOf(false)
     var selectedIndexCategory = mutableIntStateOf(-1)
-
-    fun getSuggestionsIngredient(colorMatched: Color): List<AnnotatedString> {
-        val query = inputTextStateIngredient.text.toString()
-        val suggestions = highlight(
-            color = colorMatched,
-            query = query,
-            items = ingredients.map { it.name },
-            matches = findMatchingIndex(query, gsaIngredients)
-        )
-        return suggestions
-    }
 
     fun selectSuggestionIngredient(suggestion: String) {
         inputTextStateIngredient.setTextAndPlaceCursorAtEnd(suggestion)
@@ -148,7 +132,6 @@ class InputIngredientsViewModel @Inject constructor(
 
     private fun updateGSA() {
             gsaIngredients = GSuffArray(*ingredients.map { it.name }.toTypedArray())
-
     }
 
     private fun loadIngredients () {
@@ -157,36 +140,5 @@ class InputIngredientsViewModel @Inject constructor(
 
     private fun loadInputtedIngredients(): SnapshotStateList<IngredientModel> {
         return ingredientRepository.getInputtedIngredients().toMutableStateList()
-    }
-
-    private fun findMatchingIndex(query: String, gsa: GSuffArray): Map<Int, List<Int>> {
-        if (query.isEmpty()) return emptyMap()
-
-        return gsa.index(query)
-            .groupBy { (_, itemIndex) -> itemIndex } // group by index to yield a map of index to a list of index and character positions
-            .mapValues { (_, list) -> list.map { (start, _) -> start } } // generate new map of index(key) to list of character positions (Values)
-    }
-
-    private fun highlight(
-        color: Color,
-        query: String,
-        items: List<String>,
-        matches: Map<Int, List<Int>>
-    ): List<AnnotatedString> {
-        if (query.isEmpty()) return items.map { AnnotatedString(it) }
-
-        return matches
-            .map { entry ->     // build list of annotated string from the index and character positions
-                buildAnnotatedString {
-                    append(items[entry.key])
-                    entry.value.forEach {
-                        addStyle(
-                            style = SpanStyle(background = color),
-                            start = it,
-                            end = it + query.length
-                        )
-                    }
-                }
-            }
     }
 }

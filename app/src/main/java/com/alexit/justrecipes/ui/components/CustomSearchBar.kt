@@ -1,5 +1,6 @@
 package com.alexit.justrecipes.ui.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,12 +22,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.KeyboardActionHandler
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
@@ -38,17 +45,24 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alexit.justrecipes.R
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.update
 
+@OptIn(FlowPreview::class)
 @Composable
 fun CustomSearchBar (
-    focusInputState: MutableState<Boolean>,
     state: TextFieldState,
-    suggestions: List<AnnotatedString>,
+    ingredientsName: PersistentList<String>,
+    //suggestions: List<AnnotatedString>,
     onSuggestionClick: (String) -> Unit,
     onDoneClick: (String) -> Unit,
     height: Dp,
@@ -68,9 +82,10 @@ fun CustomSearchBar (
     bottomMenuHeight: Dp,
     colorIconSearch: Color,
 ) {
+    var isFocusedIngredient by remember { mutableStateOf(false) }
     val colorField: Color
     val colorBorderField: Color
-    if (state.text.isNotEmpty() || focusInputState.value) {
+    if (state.text.isNotEmpty() || isFocusedIngredient) {
         colorField = focusedField
         colorBorderField = focusedBorderField
     } else {
@@ -78,13 +93,18 @@ fun CustomSearchBar (
         colorBorderField = unfocusedBorderField
     }
     val keyboardController = LocalSoftwareKeyboardController.current
+    val suggestionsState = rememberSuggestionsState(items = ingredientsName)
+    //val suggestions = suggestionsState.suggestions.collectAsStateWithLifecycle().value
     BasicTextField(
         state = state,
         modifier = Modifier
-            .onFocusChanged { focusInputState.value = it.isFocused}
+            .onFocusChanged { isFocusedIngredient = it.isFocused }
             .height(height)
             .width(width),
         enabled = true,
+        inputTransformation = InputTransformation {
+            if ( asCharSequence().isNotEmpty() && !asCharSequence().first().isLetter()) revertAllChanges()
+        },
         textStyle = textStyle.copy(color = focusedTextColor),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,
@@ -122,7 +142,7 @@ fun CustomSearchBar (
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (state.text.isNotEmpty() || focusInputState.value) {
+                if (state.text.isNotEmpty() || isFocusedIngredient) {
                     Image(
                         modifier = Modifier
                             .size(sizeIcon)
@@ -139,7 +159,7 @@ fun CustomSearchBar (
                             )
                             .padding(start = contentPadding),
                         contentAlignment = Alignment.CenterStart
-                        )
+                    )
                     {
                         innerTextField()
                     }
@@ -164,7 +184,8 @@ fun CustomSearchBar (
                         contentDescription = stringResource(id = R.string.icon_add),
                         colorFilter = ColorFilter.tint(unfocusedTextColor)
                     )
-                    Box(modifier = Modifier.padding(start = contentPadding)
+                    Box(
+                        modifier = Modifier.padding(start = contentPadding)
                     ) {
                         BasicText(
                             style = textStyle,
@@ -178,6 +199,7 @@ fun CustomSearchBar (
         },
     )
     if (state.text.isNotEmpty()) {
+        val suggestions = suggestionsState.suggestions.collectAsStateWithLifecycle().value
         LazyColumn(
             modifier = Modifier
                 .consumeWindowInsets(paddingValues = PaddingValues(bottomMenuHeight))
@@ -194,10 +216,11 @@ fun CustomSearchBar (
                     ),
                     shape = RoundedCornerShape(size = radiusShape)
                 )
-                .padding(start = contentPadding, end = contentPadding),
+                .padding(start = contentPadding, end = contentPadding)
+                .animateContentSize(),
             verticalArrangement = Arrangement.Center
         ) {
-            items(items = suggestions) { suggestion ->
+            items(items = suggestions, key = { suggestion -> suggestion.text } ) { suggestion ->
                 BasicText(
                     modifier = Modifier
                         .padding(top = contentPadding, bottom = contentPadding)
@@ -220,4 +243,43 @@ fun CustomSearchBar (
             }
         }
     }
+    LaunchedEffect(state.text) {
+        suggestionsState.suggestions.update {
+            highlight(
+                color = unfocusedField,
+                query = state.text.toString().trim(),
+                items = ingredientsName,
+                matches = suggestionsState.findMatchingIndex(state.text.toString().trim())
+            )
+        }
+    }
+}
+
+@Composable
+fun rememberSuggestionsState(items: PersistentList<String>): SuggestionsState {
+    val scope = rememberCoroutineScope()
+    return remember { SuggestionsState(scope, items) }
+}
+
+private fun highlight(
+    color: Color,
+    query: String,
+    items: List<String>,
+    matches: Map<Int, List<Int>>
+): List<AnnotatedString> {
+    if (query.isEmpty()) return listOf()
+
+    return matches
+        .map { entry ->     // build list of annotated string from the index and character positions
+            buildAnnotatedString {
+                append(items[entry.key])
+                entry.value.forEach {
+                    addStyle(
+                        style = SpanStyle(background = color),
+                        start = it,
+                        end = it + query.length
+                    )
+                }
+            }
+        }
 }

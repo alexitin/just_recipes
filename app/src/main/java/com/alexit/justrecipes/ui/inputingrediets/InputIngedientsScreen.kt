@@ -17,13 +17,13 @@ import com.alexit.justrecipes.ui.components.CustomDialog
 import com.alexit.justrecipes.ui.components.CustomPopup
 import com.alexit.justrecipes.ui.components.CustomSearchBar
 import com.alexit.justrecipes.ui.theme.JustRecipesTheme
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun InputIngredientsScreen(
    inputIngredientsViewModel: InputIngredientsViewModel = hiltViewModel()
 ) {
     val inputIngredientsUiState by inputIngredientsViewModel.uiState.collectAsState()
-    val suggestions = inputIngredientsViewModel.getSuggestionsIngredient(JustRecipesTheme.colors.background3)
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -44,9 +44,9 @@ fun InputIngredientsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CustomSearchBar(
-                focusInputState = inputIngredientsViewModel.focusInputIngredientState,
                 state = inputIngredientsViewModel.inputTextStateIngredient,
-                suggestions = suggestions,
+                ingredientsName = inputIngredientsViewModel.ingredients.map { it.name }.toPersistentList(),
+                //suggestions = inputIngredientsViewModel.suggestions,
                 onSuggestionClick = { suggestion: String -> inputIngredientsViewModel.selectSuggestionIngredient(suggestion) },
                 onDoneClick = { ingredientName: String -> inputIngredientsViewModel.addInputtedIngredient(ingredientName) },
                 height = JustRecipesTheme.dimensions.heightFieldInput,
@@ -158,3 +158,4 @@ fun InputIngredientsScreen(
         }
     }
 }
+

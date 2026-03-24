@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     implementation(libs.androidx.hilt.viewmodel)
     implementation(libs.androidx.hilt.navigation)
+    implementation(libs.kotlin.immutable.collections)
     ksp(libs.dagger.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
 
