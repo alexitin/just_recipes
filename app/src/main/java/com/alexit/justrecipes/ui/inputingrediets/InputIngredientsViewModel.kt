@@ -4,12 +4,15 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexit.justrecipes.data.model.IngredientModel
 import com.alexit.justrecipes.data.repository.IngredientRepository
+import com.alexit.justrecipes.ui.components.SuggestionsState
 import com.alexit.justrecipes.utility.GSuffArray
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,16 +30,24 @@ class InputIngredientsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(InputIngredientsUiState())
     val uiState: StateFlow<InputIngredientsUiState> = _uiState.asStateFlow()
 
-    private lateinit var _inputtedIngredients: SnapshotStateList<IngredientModel>
+    private val _inputtedIngredients = mutableStateListOf<IngredientModel>()
     val inputtedIngredients: List<IngredientModel> get() = _inputtedIngredients
-    private lateinit var _ingredients: SnapshotStateList<IngredientModel>
+    private val _ingredients = mutableStateListOf<IngredientModel>()
     val ingredients: List<IngredientModel> get() = _ingredients
+
+    private val _ingredientsName = mutableStateListOf<String>()
+    val ingredientsName: List<String> get() = _ingredientsName
+
+
+    //private val _suggestionsState = mutableStateOf(SuggestionsState(ingredients.map {it.name}))
+    //val suggestionsState: StateFlow<SuggestionsState> = _suggestionsState.as
+
     val inputTextStateIngredient = TextFieldState()
 
     init {
         viewModelScope.launch {
-            _ingredients = loadIngredients()
-            _inputtedIngredients = loadInputtedIngredients()
+            loadIngredients()
+            loadInputtedIngredients()
         }
     }
 
@@ -87,8 +98,9 @@ class InputIngredientsViewModel @Inject constructor(
             category = category
         )
         ingredientRepository.addIngredient(addingIngredient)
-        _ingredients.add(addingIngredient)
         ingredientRepository.addInputtedIngredient(addingIngredient)
+        _ingredients.add(addingIngredient)
+        _ingredientsName.add(addingIngredient.name)
         _inputtedIngredients.add(0, addingIngredient)
         selectedIndexCategory.intValue = -1
         updateIsIngredientNew()
@@ -127,11 +139,12 @@ class InputIngredientsViewModel @Inject constructor(
         inputtedIngredients.find { it.id == id }?.weight = weight
     }
 
-    private fun loadIngredients(): SnapshotStateList<IngredientModel> {
-        return ingredientRepository.getIngredients().toMutableStateList()
+    private fun loadIngredients() {
+        _ingredients.addAll(ingredientRepository.getIngredients())
+        _ingredientsName.addAll(ingredients.map { it.name })
     }
 
-    private fun loadInputtedIngredients(): SnapshotStateList<IngredientModel> {
-        return ingredientRepository.getInputtedIngredients().toMutableStateList()
+    private fun loadInputtedIngredients() {
+         _inputtedIngredients.addAll(ingredientRepository.getInputtedIngredients())
     }
 }

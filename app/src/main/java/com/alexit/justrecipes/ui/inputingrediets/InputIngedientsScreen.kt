@@ -17,17 +17,17 @@ import com.alexit.justrecipes.R
 import com.alexit.justrecipes.data.model.IngredientModel
 import com.alexit.justrecipes.ui.components.CustomDialog
 import com.alexit.justrecipes.ui.components.CustomPopup
-import com.alexit.justrecipes.ui.components.CustomSearchBar
+import com.alexit.justrecipes.ui.components.CustomTextField
 import com.alexit.justrecipes.ui.components.SuggestionsState
 import com.alexit.justrecipes.ui.theme.JustRecipesTheme
-import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun InputIngredientsScreen(
    inputIngredientsViewModel: InputIngredientsViewModel = hiltViewModel()
 ) {
     val inputIngredientsUiState by inputIngredientsViewModel.uiState.collectAsState()
+    //val suggestionsState = rememberSuggestionsState(items = inputIngredientsViewModel.ingredientsName)
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -47,10 +47,8 @@ fun InputIngredientsScreen(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CustomSearchBar(
+            CustomTextField(
                 state = inputIngredientsViewModel.inputTextStateIngredient,
-                ingredientsName = inputIngredientsViewModel.ingredients.map { it.name }.toPersistentList(),
-                onSuggestionClick = { suggestion: String -> inputIngredientsViewModel.selectSuggestionIngredient(suggestion) },
                 onDoneClick = { ingredientName: String -> inputIngredientsViewModel.addInputtedIngredient(ingredientName) },
                 height = JustRecipesTheme.dimensions.heightFieldInput,
                 width = JustRecipesTheme.dimensions.widthInputtedIngredient,
@@ -66,11 +64,27 @@ fun InputIngredientsScreen(
                 radiusShape = JustRecipesTheme.dimensions.radiusCornerField,
                 borderThickness = JustRecipesTheme.dimensions.borderThickness,
                 sizeIcon = JustRecipesTheme.dimensions.sizeIcon1,
-                bottomMenuHeight = JustRecipesTheme.dimensions.heightBottomMenu,
-                colorIconSearch = JustRecipesTheme.colors.iconSearchIngredient,
+                colorIcon = JustRecipesTheme.colors.iconSearchIngredient
             )
+            if (inputIngredientsViewModel.inputTextStateIngredient.text.isNotEmpty()){
+                SuggestionsIngredientsShow(
+                    state = inputIngredientsViewModel.inputTextStateIngredient,
+                    suggestionsState = rememberSuggestionsState(items = inputIngredientsViewModel.ingredientsName),
+                    onSuggestionClick = { suggestion: String -> inputIngredientsViewModel.selectSuggestionIngredient(suggestion) },
+                    width = JustRecipesTheme.dimensions.widthInputtedIngredient,
+                    textStyle = JustRecipesTheme.typography.input1,
+                    colorField = JustRecipesTheme.colors.background2,
+                    colorBorderField = JustRecipesTheme.colors.border2,
+                    colorText = JustRecipesTheme.colors.text2,
+                    colorSuggestion = JustRecipesTheme.colors.background3,
+                    contentPadding = JustRecipesTheme.dimensions.contentPaddingField,
+                    radiusShape = JustRecipesTheme.dimensions.radiusCornerField,
+                    borderThickness = JustRecipesTheme.dimensions.borderThickness,
+                    bottomMenuHeight = JustRecipesTheme.dimensions.heightBottomMenu,
+                )
+            }
             if (inputIngredientsViewModel.inputTextStateIngredient.text.isEmpty()) {
-                InputtedIngredientsList(
+                InputtedIngredientsShow(
                     inputtedIngredients = inputIngredientsViewModel.inputtedIngredients,
                     onDeleteClick = { ingredient: IngredientModel -> inputIngredientsViewModel.updateIsDeleteIngredient(ingredient) },
                     onWeightClick = { id: Int, weight: Int -> inputIngredientsViewModel.updateWeightIngredient(id, weight) },
@@ -162,4 +176,8 @@ fun InputIngredientsScreen(
     }
 }
 
-
+@Composable
+private fun rememberSuggestionsState(items: List<String>): SuggestionsState {
+    val scope = rememberCoroutineScope()
+    return remember { SuggestionsState(scope, items) }
+}

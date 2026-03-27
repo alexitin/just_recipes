@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SuggestionsState(scope: CoroutineScope, val items: PersistentList<String>) {
+class SuggestionsState(scope: CoroutineScope, val items: List<String>) {
+//class SuggestionsState(val items: List<String>) {
     private lateinit var gsa: GSuffArray
     val suggestions: MutableStateFlow<List<AnnotatedString>> = MutableStateFlow(emptyList())
 

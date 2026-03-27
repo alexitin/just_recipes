@@ -50,7 +50,7 @@ import com.alexit.justrecipes.R
 import com.alexit.justrecipes.data.model.IngredientModel
 
 @Composable
-fun InputtedIngredientsList(
+fun InputtedIngredientsShow(
     inputtedIngredients: List<IngredientModel>,
     onDeleteClick: (IngredientModel) -> Unit,
     onWeightClick: (Int, Int) -> Unit,
