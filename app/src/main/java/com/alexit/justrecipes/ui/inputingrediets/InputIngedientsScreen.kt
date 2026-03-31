@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -18,15 +16,14 @@ import com.alexit.justrecipes.data.model.IngredientModel
 import com.alexit.justrecipes.ui.components.CustomDialog
 import com.alexit.justrecipes.ui.components.CustomPopup
 import com.alexit.justrecipes.ui.components.CustomTextField
-import com.alexit.justrecipes.ui.components.SuggestionsState
 import com.alexit.justrecipes.ui.theme.JustRecipesTheme
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun InputIngredientsScreen(
    inputIngredientsViewModel: InputIngredientsViewModel = hiltViewModel()
 ) {
     val inputIngredientsUiState by inputIngredientsViewModel.uiState.collectAsState()
-    //val suggestionsState = rememberSuggestionsState(items = inputIngredientsViewModel.ingredientsName)
 
 
     Column(
@@ -69,7 +66,7 @@ fun InputIngredientsScreen(
             if (inputIngredientsViewModel.inputTextStateIngredient.text.isNotEmpty()){
                 SuggestionsIngredientsShow(
                     state = inputIngredientsViewModel.inputTextStateIngredient,
-                    suggestionsState = rememberSuggestionsState(items = inputIngredientsViewModel.ingredientsName),
+                    ingredientsName = inputIngredientsViewModel.ingredients.map { it.name }.toPersistentList(),
                     onSuggestionClick = { suggestion: String -> inputIngredientsViewModel.selectSuggestionIngredient(suggestion) },
                     width = JustRecipesTheme.dimensions.widthInputtedIngredient,
                     textStyle = JustRecipesTheme.typography.input1,
@@ -176,8 +173,3 @@ fun InputIngredientsScreen(
     }
 }
 
-@Composable
-private fun rememberSuggestionsState(items: List<String>): SuggestionsState {
-    val scope = rememberCoroutineScope()
-    return remember { SuggestionsState(scope, items) }
-}

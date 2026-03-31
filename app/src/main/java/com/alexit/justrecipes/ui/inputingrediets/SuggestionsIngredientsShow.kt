@@ -18,6 +18,9 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
@@ -29,15 +32,22 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alexit.justrecipes.ui.components.CustomDivider
 import com.alexit.justrecipes.ui.components.SuggestionsState
 import com.alexit.justrecipes.ui.components.dpToPx
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Composable
 fun SuggestionsIngredientsShow(
     state: TextFieldState,
-    suggestionsState: SuggestionsState,
+    ingredientsName: PersistentList<String>,
     onSuggestionClick: (String) -> Unit,
     width: Dp,
     textStyle: TextStyle,
@@ -50,6 +60,7 @@ fun SuggestionsIngredientsShow(
     radiusShape:Dp,
     bottomMenuHeight: Dp,
 ){
+    val suggestionsState = rememberSuggestionsState(ingredientsName)
     val suggestions = suggestionsState.suggestions.collectAsStateWithLifecycle().value
     LazyColumn(
         modifier = Modifier
@@ -71,7 +82,7 @@ fun SuggestionsIngredientsShow(
             .animateContentSize(),
         verticalArrangement = Arrangement.Center
     ) {
-        items(items = suggestions) { suggestion ->
+        items(items = suggestions, key = {it.text}) { suggestion ->
             BasicText(
                 modifier = Modifier
                     .padding(top = contentPadding, bottom = contentPadding)
@@ -94,18 +105,31 @@ fun SuggestionsIngredientsShow(
         }
     }
     LaunchedEffect(state.text) {
-        delay(300)
-        withContext(Dispatchers.IO) {
-            suggestionsState.suggestions.update {
-                highlight(
-                    color = colorSuggestion,
-                    query = state.text.toString().trim(),
-                    items = suggestionsState.items,
-                    matches = suggestionsState.findMatchingIndex(state.text.toString().trim())
-                )
+        snapshotFlow { state.text }
+            .customDebounce()
+            //.debounce(300)
+            .distinctUntilChanged()
+            .collectLatest { query ->
+                withContext(Dispatchers.IO) {
+                    suggestionsState.suggestions.update {
+                        highlight(
+                            color = colorSuggestion,
+                            query = query.toString().trim(),
+                            items = suggestionsState.items,
+                            matches = suggestionsState.findMatchingIndex(
+                                query = query.toString().trim()
+                            )
+                        )
+                    }
+                }
             }
-        }
     }
+}
+
+@Composable
+private fun rememberSuggestionsState(items: PersistentList<String>): SuggestionsState {
+    val scope = rememberCoroutineScope()
+    return remember { SuggestionsState(scope, items) }
 }
 
 private fun highlight(
@@ -128,4 +152,15 @@ private fun highlight(
                 }
             }
         }
+}
+
+private fun <T> Flow<T>.customDebounce(): Flow<T> = channelFlow {
+    var queryJob: Job? = null
+    collect { value ->
+        queryJob?.cancel()
+        queryJob = launch {
+            delay(300)
+            send(value)
+        }
+    }
 }

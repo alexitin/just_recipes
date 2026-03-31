@@ -35,10 +35,6 @@ class InputIngredientsViewModel @Inject constructor(
     private val _ingredients = mutableStateListOf<IngredientModel>()
     val ingredients: List<IngredientModel> get() = _ingredients
 
-    private val _ingredientsName = mutableStateListOf<String>()
-    val ingredientsName: List<String> get() = _ingredientsName
-
-
     //private val _suggestionsState = mutableStateOf(SuggestionsState(ingredients.map {it.name}))
     //val suggestionsState: StateFlow<SuggestionsState> = _suggestionsState.as
 
@@ -100,7 +96,6 @@ class InputIngredientsViewModel @Inject constructor(
         ingredientRepository.addIngredient(addingIngredient)
         ingredientRepository.addInputtedIngredient(addingIngredient)
         _ingredients.add(addingIngredient)
-        _ingredientsName.add(addingIngredient.name)
         _inputtedIngredients.add(0, addingIngredient)
         selectedIndexCategory.intValue = -1
         updateIsIngredientNew()
@@ -141,7 +136,6 @@ class InputIngredientsViewModel @Inject constructor(
 
     private fun loadIngredients() {
         _ingredients.addAll(ingredientRepository.getIngredients())
-        _ingredientsName.addAll(ingredients.map { it.name })
     }
 
     private fun loadInputtedIngredients() {
