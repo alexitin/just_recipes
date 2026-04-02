@@ -24,6 +24,8 @@ fun InputIngredientsScreen(
    inputIngredientsViewModel: InputIngredientsViewModel = hiltViewModel()
 ) {
     val inputIngredientsUiState by inputIngredientsViewModel.uiState.collectAsState()
+    val ingredients = inputIngredientsViewModel.ingredients.collectAsState(emptyList())
+    val inputtedIngredients = inputIngredientsViewModel.inputtedIngredients.collectAsState(emptyList())
 
 
     Column(
@@ -66,7 +68,7 @@ fun InputIngredientsScreen(
             if (inputIngredientsViewModel.inputTextStateIngredient.text.isNotEmpty()){
                 SuggestionsIngredientsShow(
                     state = inputIngredientsViewModel.inputTextStateIngredient,
-                    ingredientsName = inputIngredientsViewModel.ingredients.map { it.name }.toPersistentList(),
+                    ingredientsName = ingredients.value.map { it.name }.toPersistentList(),
                     onSuggestionClick = { suggestion: String -> inputIngredientsViewModel.selectSuggestionIngredient(suggestion) },
                     width = JustRecipesTheme.dimensions.widthInputtedIngredient,
                     textStyle = JustRecipesTheme.typography.input1,
@@ -82,7 +84,7 @@ fun InputIngredientsScreen(
             }
             if (inputIngredientsViewModel.inputTextStateIngredient.text.isEmpty()) {
                 InputtedIngredientsShow(
-                    inputtedIngredients = inputIngredientsViewModel.inputtedIngredients,
+                    inputtedIngredients = inputtedIngredients.value.toPersistentList(),
                     onDeleteClick = { ingredient: IngredientModel -> inputIngredientsViewModel.updateIsDeleteIngredient(ingredient) },
                     onWeightClick = { id: Int, weight: Int -> inputIngredientsViewModel.updateWeightIngredient(id, weight) },
                     iconDeleteIngredient = R.drawable.round_do_not_disturb_on_24,
@@ -120,7 +122,7 @@ fun InputIngredientsScreen(
                     radiusShape = JustRecipesTheme.dimensions.radiusCornerField,
                     borderThickness = JustRecipesTheme.dimensions.borderThickness,
                     textDialog = stringResource(R.string.delete_ingredient),
-                    item = inputIngredientsViewModel.deletingIngredient.name,
+                    item = inputIngredientsViewModel.deletingIngredient.value.name,
                     textStyle = JustRecipesTheme.typography.title1,
                     textConfirmation = stringResource(R.string.confirmation),
                     textDismiss = stringResource(R.string.dismiss)
@@ -139,7 +141,7 @@ fun InputIngredientsScreen(
                     textStyle = JustRecipesTheme.typography.title1,
                     textPopupPre = stringResource(R.string.ingredient),
                     textPopupAft = stringResource(R.string.already_exist),
-                    item = inputIngredientsViewModel.addingIngredient.name
+                    item = inputIngredientsViewModel.addingIngredient.value.name
                 )
             }
             if (inputIngredientsUiState.isIngredientNew) {
@@ -155,7 +157,7 @@ fun InputIngredientsScreen(
                     radiusShape = JustRecipesTheme.dimensions.radiusCornerField,
                     borderThickness = JustRecipesTheme.dimensions.borderThickness,
                     textDialogPre = stringResource(R.string.add_unknown_ingredient),
-                    item = inputIngredientsViewModel.addingIngredient.name,
+                    item = inputIngredientsViewModel.addingIngredient.value.name,
                     textDialogAft = stringResource(R.string.select_category_ingredient),
                     textStyle = JustRecipesTheme.typography.title1,
                     textStyleCategory = JustRecipesTheme.typography.input1,
@@ -165,7 +167,7 @@ fun InputIngredientsScreen(
                     colorBackgroundCategory = JustRecipesTheme.colors.background2,
                     colorBorderCategory = JustRecipesTheme.colors.border2,
                     colorTextCategory = JustRecipesTheme.colors.text2,
-                    listCategory = inputIngredientsViewModel.ingredients.map { it.category }.distinct().sorted(),
+                    listCategory = ingredients.value.map { it.category }.distinct().sorted().toPersistentList(),
                     colorBackgroundCategorySelected = JustRecipesTheme.colors.background3
                 )
             }

@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.window.Dialog
 import com.alexit.justrecipes.ui.components.CustomDivider
 import com.alexit.justrecipes.ui.components.dpToPx
+import kotlinx.collections.immutable.PersistentList
 
 @Composable
 fun MakeNewIngredient(
@@ -54,7 +55,7 @@ fun MakeNewIngredient(
     contentPadding: Dp,
     colorBackgroundCategory: Color,
     colorBorderCategory: Color,
-    listCategory: List<String>,
+    listCategory: PersistentList<String>,
     colorTextCategory: Color,
     colorBackgroundCategorySelected: Color
 ) {

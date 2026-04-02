@@ -13,7 +13,6 @@ import com.alexit.justrecipes.ui.searchrecipe.SearchRecipeScreen
 @Composable
 fun RecipesNavHost(
     navController: NavHostController,
-    //modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
@@ -40,7 +39,7 @@ fun NavHostController.navigateSingleTopTo(route: String) {
         popUpTo(
             this@navigateSingleTopTo.graph.findStartDestination().id
         ) {
-            saveState = true
+            inclusive = true
         }
         launchSingleTop = true
         restoreState = true

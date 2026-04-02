@@ -1,5 +1,6 @@
 package com.alexit.justrecipes.ui.inputingrediets
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -48,10 +49,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.alexit.justrecipes.R
 import com.alexit.justrecipes.data.model.IngredientModel
+import kotlinx.collections.immutable.PersistentList
 
 @Composable
 fun InputtedIngredientsShow(
-    inputtedIngredients: List<IngredientModel>,
+    inputtedIngredients: PersistentList<IngredientModel>,
     onDeleteClick: (IngredientModel) -> Unit,
     onWeightClick: (Int, Int) -> Unit,
     iconDeleteIngredient: Int,
@@ -83,6 +85,7 @@ fun InputtedIngredientsShow(
         modifier = Modifier
             .consumeWindowInsets(paddingValues = PaddingValues(bottomMenuHeight))
             .imePadding()
+            .animateContentSize()
     ) {
         items(items = inputtedIngredients, key = { it.id }) { ingredient ->
             val state = rememberTextFieldState(ingredient.weight?.toString() ?: "")

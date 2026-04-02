@@ -61,7 +61,7 @@ fun SuggestionsIngredientsShow(
     bottomMenuHeight: Dp,
 ){
     val suggestionsState = rememberSuggestionsState(ingredientsName)
-    val suggestions = suggestionsState.suggestions.collectAsStateWithLifecycle().value
+    val suggestions = suggestionsState.suggestions.collectAsStateWithLifecycle()
     LazyColumn(
         modifier = Modifier
             .consumeWindowInsets(paddingValues = PaddingValues(bottomMenuHeight))
@@ -82,7 +82,7 @@ fun SuggestionsIngredientsShow(
             .animateContentSize(),
         verticalArrangement = Arrangement.Center
     ) {
-        items(items = suggestions, key = {it.text}) { suggestion ->
+        items(items = suggestions.value, key = {it.text}) { suggestion ->
             BasicText(
                 modifier = Modifier
                     .padding(top = contentPadding, bottom = contentPadding)
@@ -106,7 +106,7 @@ fun SuggestionsIngredientsShow(
     }
     LaunchedEffect(state.text) {
         snapshotFlow { state.text }
-            .customDebounce()
+            .customDebounce(300)
             //.debounce(300)
             .distinctUntilChanged()
             .collectLatest { query ->
@@ -154,12 +154,12 @@ private fun highlight(
         }
 }
 
-private fun <T> Flow<T>.customDebounce(): Flow<T> = channelFlow {
+private fun <T> Flow<T>.customDebounce(timeMillis: Long): Flow<T> = channelFlow {
     var queryJob: Job? = null
     collect { value ->
         queryJob?.cancel()
         queryJob = launch {
-            delay(300)
+            delay(timeMillis)
             send(value)
         }
     }
