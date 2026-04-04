@@ -1,6 +1,7 @@
 package com.alexit.justrecipes.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -17,7 +18,6 @@ fun RecipesNavHost(
     NavHost(
         navController = navController,
         startDestination = InputIngredients.route,
-        //modifier = modifier
     ) {
         composable(route = InputIngredients.route) {
             InputIngredientsScreen()

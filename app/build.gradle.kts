@@ -58,8 +58,11 @@ dependencies {
     implementation(libs.androidx.hilt.viewmodel)
     implementation(libs.androidx.hilt.navigation)
     implementation(libs.kotlin.immutable.collections)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
     ksp(libs.dagger.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
+    ksp(libs.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
